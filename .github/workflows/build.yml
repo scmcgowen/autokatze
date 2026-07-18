@@ -1,0 +1,48 @@
+name: Rust Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.rs'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        rust-version: ["stable"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: swatinem/rust-cache@v2
+        with:
+          prefix-key: "v0-rust"
+          cache-targets: true
+
+      - name: Install Dependencies
+        run: cargo fetch
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Test
+        run: cargo test --release --all
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-build-${{ runner.os }}
+          path: target/release/kromer${{ runner.os == 'Windows' && '.exe' || '' }}
+          if-no-files-found: error
+          retention-days: 3
