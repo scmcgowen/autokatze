@@ -43,6 +43,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rust-build-${{ runner.os }}
-          path: target/release/kromer${{ runner.os == 'Windows' && '.exe' || '' }}
+          path: target/release/autokatze${{ runner.os == 'Windows' && '.exe' || '' }}
           if-no-files-found: error
           retention-days: 3
