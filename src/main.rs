@@ -14,6 +14,8 @@ mod utils;
 struct Settings {
     // Where logs should be sent for each server
     log_channels: HashMap<serenity::GuildId, serenity::ChannelId>,
+
+    antispam_allowed_keywords: HashMap<serenity::GuildId, Vec<String>>,
     // Roles that only bots will assign themselves
     honeypot_roles: HashMap<serenity::GuildId, serenity::RoleId>,
     // Roles that users can assign themselves

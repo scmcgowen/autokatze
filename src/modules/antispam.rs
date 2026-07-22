@@ -177,6 +177,17 @@ pub async fn on_message(ctx: &serenity::Context, msg: &serenity::Message) {
     if utils::is_staff(&member, ctx).await {
         return;
     }
+    if let Some(guild_id) = msg.guild_id {
+        let keywords = SETTINGS.get().unwrap().antispam_allowed_keywords.get(&guild_id);
+        if let Some(keywords) = keywords {
+            let msg_text = msg.content.clone();
+            for allowed_keyword in keywords {
+                if msg_text.to_lowercase().contains(&allowed_keyword.to_lowercase()) {
+                    return;
+                }
+            }
+        }
+    }
 
     insert_message(msg.clone());
 }

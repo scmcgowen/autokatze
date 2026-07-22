@@ -1,12 +1,12 @@
 use poise::serenity_prelude::{self as serenity, GuildMemberUpdateEvent, Member};
 use poise::serenity_prelude::{
-    ChannelId, CreateEmbed, CreateMessage, GuildId, Mentionable,
+    CreateEmbed, CreateMessage
 };
 use crate::CONTEXT;
 
 use crate::{SETTINGS, utils};
 
-pub async fn on_member_update(ctx: &serenity::Context, old_if_available: Option<&Member>, new: Option<&Member>, event: &GuildMemberUpdateEvent) {
+pub async fn on_member_update(ctx: &serenity::Context, old_if_available: Option<&Member>, new: Option<&Member>, _event: &GuildMemberUpdateEvent) {
     // if the new variant of the member doesn't exist somehow, ignore, but throw a log
     let member = match new {
         Some(m) => m,
