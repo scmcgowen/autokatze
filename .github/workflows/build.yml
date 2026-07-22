@@ -2,13 +2,13 @@ name: Rust Build
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - '**/*.rs'
       - 'Cargo.toml'
       - 'Cargo.lock'
   pull_request:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 env:
